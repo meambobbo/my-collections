@@ -11,7 +11,7 @@ import kotlin.math.roundToInt
 
 private val logger = KotlinLogging.logger {}
 
-class MyArray<T>() {
+class MyKotlinArray<T>() {
     private lateinit var arr: Array<Any?>
     private var size = 0
     private val multiplier: Double = 2.0
@@ -37,14 +37,14 @@ class MyArray<T>() {
      */
     fun get(i: Int): T? {
         if (i >= size)
-            throw ArrayIndexOutOfBoundsException()
+            throw ArrayIndexOutOfBoundsException(i)
         return this.arr[i] as T
     }
 
     /**
      * set at index
      */
-    fun set(i: Int, item: T?): MyArray<T> {
+    fun set(i: Int, item: T?): MyKotlinArray<T> {
         this.arr[i] = item
         return this
     }
@@ -60,7 +60,7 @@ class MyArray<T>() {
      * Add a single item - will increased the managed array size
      * If the backing Array is too small to handle the additional item, clone the items to a new Array 2x as large
      */
-    fun add(item: T?): MyArray<T> {
+    fun add(item: T?): MyKotlinArray<T> {
         if (size == arr.size) {
             val newArrSize = (multiplier * arr.size).roundToInt() + 1
             logger.warn { "increasing array size from ${arr.size} elements to ${newArrSize}" }
@@ -82,7 +82,7 @@ class MyArray<T>() {
      * Add an Array of items - will increased the managed array size
      * If the backing Array is too small to handle the additional items, clone to a double-sized array as many times as needed
      */
-    fun add(items: Array<T?>): MyArray<T> {
+    fun add(items: Array<T?>): MyKotlinArray<T> {
 
         for (item in items) {
             if (size == arr.size) {
@@ -105,7 +105,7 @@ class MyArray<T>() {
     /**
      * remove a single item by index, decrementing the size and shifting the items above the removed index
      */
-    fun rem(i: Int): MyArray<T> {
+    fun rem(i: Int): MyKotlinArray<T> {
         var x = i
         while (x < size - 1) {
             arr[x] = arr[x + 1]
@@ -131,7 +131,7 @@ class MyArray<T>() {
     /**
      * remove all intances of item T
      */
-    fun rem (item: T): MyArray<T> {
+    fun rem (item: T): MyKotlinArray<T> {
         var x = find(item)
         while (x != -1) {
             rem(x)
